@@ -88,6 +88,10 @@ p:first-child {padding-top: 0;margin-top:0;}
       <p>Apache creates a path to <code>var/www/html</code> which becomes the web root, meaning files inside the html directory will be served to browsers requesting them from the ip address.</p>
       <p>If you want your users to have sftp permissions into the web root, you need to add them to the apache group.</p>
       <code>$ sudo usermod -aG www-data your_username</code>
+      <p>Then, change the owner of the web root.</p>
+      <code>$ sudo chown -R www-data:www-data /var/www/html</code>
+      <p>Finally, change the permissions of the web root directory to allow editing.</p>
+      <code>$ sudo chmod -R 775 /var/www/html</code>
       <p>That's it. You're done!</p>
     </div>
   </section>
