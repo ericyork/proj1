@@ -82,10 +82,10 @@ p:first-child {padding-top: 0;margin-top:0;}
       <h3>7. Set Apache to Start at Boot</h3>
       <p>Finally, tell apache to start every time the disk boots, to be sure it starts working again if the system goes down and comes back up.</p>
       <code> $ sudo systemctl enable apache2</code>
+      <p>The best way to check, though, is to load it up in a browser. Apache creates a path to <code>/var/www/html</code> which becomes the web root, meaning files inside the <code>html</code> directory will be served to browsers requesting them. Just visit the IP address of the droplet and see.</p>
     </div>
     <div class="step">
       <h3>8. Give Users SFTP Perms</h3>
-      <p>Apache creates a path to <code>var/www/html</code> which becomes the web root, meaning files inside the html directory will be served to browsers requesting them from the ip address.</p>
       <p>If you want your users to have sftp permissions into the web root, you need to add them to the apache group.</p>
       <code>$ sudo usermod -aG www-data your_username</code>
       <p>Then, change the owner of the web root.</p>
