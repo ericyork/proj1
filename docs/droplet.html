@@ -17,7 +17,7 @@ p:first-child {padding-top: 0;margin-top:0;}
   <h1 style="text-align:center;">How to Create a LAMP Droplet</h1>
   <section id="grid">
     <div class="step">
-      <h2>Hello, there.</h2>
+      <h2>Getting Started</h2>
       <p>These instructions show you how to configure a basic LAMP server on a fresh droplet. They assume you already have a Digital Ocean account and know how to access a command-line interface.</p>
       <h3>1. Create a new Droplet</h3>
       <p>After you've created your Digital Ocean account: log in, click the "Create" button, and select "Droplet".</p>
@@ -84,8 +84,11 @@ p:first-child {padding-top: 0;margin-top:0;}
       <code> $ sudo systemctl enable apache2</code>
     </div>
     <div class="step">
-      <h3>8. That's it; you're done!</h3>
+      <h3>8. Give Users SFTP Perms</h3>
       <p>Apache creates a path to <code>var/www/html</code> which becomes the web root, meaning files inside the html directory will be served to browsers requesting them from the ip address.</p>
+      <p>If you want your users to have sftp permissions into the web root, you need to add them to the apache group.</p>
+      <code>$ sudo usermod -aG www-data your_username</code>
+      <p>That's it. You're done!</p>
     </div>
   </section>
 </body>
