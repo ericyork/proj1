@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How To Scaffold a Project</title>
+</head>
+<style>
+body {width: 90%;margin: 1em auto;background: #ececec;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+#grid{display: grid;grid-template-columns: 1fr;}
+@media screen and (min-width: 700px) {#grid {grid-template-columns: 1fr 1fr;}}
+.step {background: #fff;margin: 1em; padding: 1em;border: 1px solid gray;}
+code {background: #efefef; padding: .2em .5em .2em .5em;}
+h1{text-align:center;}
+h3 {margin-bottom: 0; padding-bottom: 0;}
+p:first-child {padding-top: 0;margin-top:0;}
+</style>
+<body>
+  <h1>How to Scaffold a Project</h1>
+  <section id="grid">
+    <div class="step">
+      <h3>1. Connect Remotely</h3>
+      <p>Use SSH to remotely log into the server.</p>
+      <code> $ ssh yourname@142.93.199.169</code>
+      <p>You may need to approve an identity exception, and then you'll be asked to enter your password.</p>
+    </div>
+    <div class="step">
+      <h3>2. Navigate to your Directory</h3>
+      <p><strong>Note: </strong>You can always see the contents of a directory by using the list command with the -all and -long arguments, like this:</p>
+      <code>$ ls -al</code>
+      <p>You can nagivate to a location using the change directory command <code>cd</code> and entering the path to the directory you want to move to. You can use <code>..</code> to move up a level.</p>
+      <code>$ cd ..</code><br>
+      <code>$ cd var/www/html/your_id</code>
+      <p>Finally, you will need to use the <code>sudo</code> command for much of this, but the command has been ommitted for brevity's sake. If something fails to work, make sure to use <code>sudo</code>.
+    </div>
+    <div class="step">
+      <h3>3. Create Subdirectories</h3>
+      <p>Use the "make directory" command to create your project structure.</p>
+      <code>$ mkdir proj1</code><br>
+      <code>$ mkdir proj1/images</code><br>
+      <code>$ mkdir proj1/styles</code><br>
+      <code>$ mkdir proj1/scripts</code><br>
+      <code>$ mkdir proj1/posts</code><br>
+      <code>$ mkdir proj1/comments</code>
+      <p>Or, you could perform the above commands more directly, like so:</p>
+      <code>$ mkdir proj1</code><br>
+      <code>$ cd proj1 </code><br>
+      <code>$ mkdir images styles scripts posts comments </code>
+    </div>
+    <div class="step">
+      <h3>4. Create Default Files</h3>
+      <p>First, add a stylesheet in the proper directory.</p>
+      <code>$ touch proj1/styles/style.css</code>
+      <p>Then, add a single rule to test it's working. For simple edits, it makes sense to use an in-built editor, such as nano.</p>
+      <code>$ nano proj1/styles/style.css</code>
+      <p>Once you've finished: exit, save, and overwrite.</p>
+      <p>Next, create the index file and edit it in the same way. Be sure to include some placeholder content as well as a link to your stylesheet (at its correct location!) to make sure it's all working.</p>
+    </div>
+    <div class="step">
+      <h3>5. Sync to a Git Repo</h3>
+      <p>Log into http://github.com and create a new repository named proj1 or the like. </p>
+      <p>Then, start a git process listening on your directory.</p>
+      <code>$ git init</code>
+      <p>Next, hook up the two repos you just made.</p>
+      <code>$ git remote add origin https://github.com/yourname/project.git</code>
+      <p>You'll be prompted to tell github who you are. You'll need your github email address and your github password to proceed. Once you've entered them, you're safe to stage and commit your changes.</p>
+    </div>
+    <div class="step">
+      <h3>6. Stage and Commit your Changes</h3>
+      <p>You can stage all changes at once using the <code> . </code> argument.</p>
+      <code>$ git add . </code>
+      <p>You can combine the comment with the commit.</p>
+      <code>$ git commit -m "First message." </code>
+      <p>Finally, push all the commits up to Github.</p>
+      <code>$ git push -u origin master </code>
+    </div>
+  </section>
+</body>
+</html>

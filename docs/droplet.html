@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How To Create a LAMP Droplet</title>
+</head>
+<style>
+body {width: 90%;margin: 1em auto;background: #ececec;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";}
+#grid{display: grid;grid-template-columns: 1fr;}
+@media screen and (min-width: 700px) {#grid {grid-template-columns: 1fr 1fr;}}
+.step {background: #fff;margin: 1em; padding: 1em;border: 1px solid gray;}
+code {background: #efefef; padding: .2em .5em .2em .5em;}
+h3 {margin-bottom: 0; padding-bottom: 0;}
+p:first-child {padding-top: 0;margin-top:0;}
+</style>
+<body>
+  <h1 style="text-align:center;">How to Create a LAMP Droplet</h1>
+  <section id="grid">
+    <div class="step">
+      <h2>Hello, there.</h2>
+      <p>These instructions show you how to configure a basic LAMP server on a fresh droplet. They assume you already have a Digital Ocean account and know how to access a command-line interface.</p>
+      <h3>1. Create a new Droplet</h3>
+      <p>After you've created your Digital Ocean account: log in, click the "Create" button, and select "Droplet".</p>
+    </div>
+    <div class="step">
+      <h3>2. Configure Your Droplet</h3>
+      <p>While creating the droplet, choose the following options.</p>
+      <ul>
+        <li>Select Ubuntu 18.04 x64</li>
+        <li>Select 1GB Droplet</li>
+        <li>Enable backups</li>
+        <li>Select NY datacenter</li>
+        <li>Check the box for Public Key</li>
+        <li>Change name</li>
+        <li>Create</li>
+      </ul>
+      <p><strong>Note:</strong> If you don't already have an RSA key pair, you'll need to generate one. On many unix-like systems, several key pairs live in the <code>ssh</code> or <code>.ssh</code> directory.</p>
+    </div>
+    <div class="step">
+      <h3 >3. Add a User</h3>
+      <p>Find and copy your new droplet&#39;s IP address, then open your terminal and enter:</p>
+      <code>$ ssh root@your.ip.address</code>
+      <p>Your connection should authorize using the RSA Key you set up earlier.</p>
+      <p>Now add a new user by entering:</p>
+      <code>$ adduser newname</code>
+      <p>Then add them to the sudoers group.</p>
+      <code>  $ usermod -aG sudo newname</code>
+      <p>Repeat this process for each new user. Then, allow them to authenticate via password by editing the sshd_config file:</p>
+      <code>$ nano /etc/ssh/sshd_config</code>
+      <p>and changing <code>PasswordAuthentication</code> to <code>yes</code>. Then exit, save, and return.</p>
+      <p>Now, go ahead and close the terminal, then reopen it. Connect via SSH using one of the new accounts you just created.</p>
+    </div>
+    <div class="step">
+      <h3>4. Enable and Test the Firewall</h3>
+      <p>Ubuntu has a great firewall built in, the Uncomplicated Firewall (UFW). Best practice is to deny all traffic and manually add exceptions. First, set the firewall to allow SSH connections.</p>
+      <code>$ sudo ufw allow OpenSSH</code>
+      <p>Next set it to allow SFTP connections.</p>
+      <code>$ sudo ufw allow sftp</code>
+      <p>Now enable the firewall.</p>
+      <code>$ sudo ufw enable</code>
+      <p>Finally, run a status check to verify the connections are allowed.</p>
+      <code>$ sudo ufw status</code>
+      <p><strong>Note:</strong> Since you're logged in as a non-root user, you'll need to escalate your permissons with the <code>sudo</code> command (which means, roughly, "do as super-user").</p>
+    </div>
+    <div class="step">
+      <h3>5. Install Apache</h3>
+      <p>Apache is the server software that will allow your virtual machine to listen on ports and serve requests. You'll insstall the latest version using an application management program (also built into Ubuntu). First, make sure the application manager is up-to-date.</p>
+      <code>$ sudo apt update</code><br>
+      <p>Now, go ahead and install apache2.</p>
+      <code>$ sudo apt install apache2</code>
+      <p><strong>Note:</strong> You still need to use <code>sudo</code> command. Get used to typing it; you'll be using it a lot.
+    </div>
+    <div class="step">
+      <h3>6. Whitelist Apache</h3>
+      <p>Apache has several modes (default ports to listen on). We want to enable both secure (https) and insecure (http) traffic, and set apache to listen on both port 80 and port 443.</p>
+      <code>$ sudo ufw allow 'Apache Full'</code>
+      <p>You can verify this is working by entering:</p>
+      <code>$ sudo systemctl status apache2</code>
+      <p>In addition, you should now see a default landing page at your IP address.</p>
+    </div>
+    <div class="step">
+      <h3>7. Set Apache to Start at Boot</h3>
+      <p>Finally, tell apache to start every time the disk boots, to be sure it starts working again if the system goes down and comes back up.</p>
+      <code> $ sudo systemctl enable apache2</code>
+    </div>
+    <div class="step">
+      <h3>8. That's it; you're done!</h3>
+      <p>Apache creates a path to <code>var/www/html</code> which becomes the web root, meaning files inside the html directory will be served to browsers requesting them from the ip address.</p>
+    </div>
+  </section>
+</body>
+</html>
